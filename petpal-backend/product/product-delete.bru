@@ -1,0 +1,22 @@
+meta {
+  name: product-delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:3025/ad/product/6794dda1e8033e613a73a39f
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  name: Producttwo
+  price: 1234
+  desc: Hello world
+  coverImg: @file(C:\Users\Narmin\Downloads\51qizilgul.jpg)
+  images: @file(C:\Users\Narmin\Downloads\101qizilgul.jpg)
+  discount: 12
+  active: true
+  rating: 4.5
+}

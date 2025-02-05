@@ -1,0 +1,17 @@
+meta {
+  name: category-edit
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3025/ad/category/6794e9199270883fb67be063
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title":"Pets"
+  }
+}

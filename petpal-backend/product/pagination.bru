@@ -1,0 +1,16 @@
+meta {
+  name: pagination
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3025/product
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  page: 1
+  limit: 1
+}

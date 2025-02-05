@@ -1,0 +1,17 @@
+meta {
+  name: category-add
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3025/ad/category
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Pet meals"
+  }
+}

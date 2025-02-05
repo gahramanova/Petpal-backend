@@ -1,0 +1,22 @@
+meta {
+  name: product-add
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3025/ad/product
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  name: Product one
+  price: 1234
+  desc: Hello world
+  coverImg: @file(C:\Users\Narmin\Downloads\51qizilgul.jpg)
+  images: @file(C:\Users\Narmin\Downloads\101qizilgul.jpg)
+  discount: 12
+  active: true
+  rating: 4.5
+}
