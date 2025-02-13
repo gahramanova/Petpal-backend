@@ -20,8 +20,13 @@ app.use("/", surfaceRouter)
 
 const adProductRouter = require("./routers/admin/product")
 const adCategoryRoute = require('./routers/admin/category');
+const adhomeRoute = require("./routers/admin/home")
+
+
+
 app.use("/ad/product", adProductRouter)
 app.use('/ad/category',adCategoryRoute);
+app.use("/ad/home", adhomeRoute)
 
 //admin router ends
 

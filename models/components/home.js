@@ -1,5 +1,6 @@
 const Joi = require("joi")
 const {default: mongoose, Schema} = require("mongoose")
+
 const homecontentSchema = Schema({
     titleFirst: String,
     imageFirst: String,
@@ -33,7 +34,7 @@ const homecontentSchema = Schema({
 
 }, {timestamps: true})
 
-const homecontentValidate = (content) => {
+const homecontentValidate = (home) => {
     const schema = new Joi.object({
         titleFirst: Joi.string(),
         imageFirst: Joi.string(),
@@ -66,9 +67,9 @@ const homecontentValidate = (content) => {
         imageFifth: Joi.string(),
         descFifth: Joi.string()
     })
-    return schema.validate(content)
+    return schema.validate(home)
 }
 
-const Content = mongoose.model("Content", homecontentSchema)
+const Home = mongoose.model("Home", homecontentSchema)
 
-module.exports = {Content, homecontentValidate}
+module.exports = {Home, homecontentValidate}
