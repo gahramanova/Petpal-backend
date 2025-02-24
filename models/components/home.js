@@ -3,7 +3,7 @@ const {default: mongoose, Schema} = require("mongoose")
 
 const homecontentSchema = Schema({
     titleFirst: String,
-    imageFirst: String,
+    homeRightImage: String,
     descFirst: String,
     titleImgFirst: String,
     titleImgSecond: String,
@@ -37,7 +37,7 @@ const homecontentSchema = Schema({
 const homecontentValidate = (home) => {
     const schema = new Joi.object({
         titleFirst: Joi.string(),
-        imageFirst: Joi.string(),
+        homeRightImage: Joi.string(),
         descFirst: Joi.string(),
         titleImgFirst: Joi.string(),
         titleImgSecond: Joi.string(),
