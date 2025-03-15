@@ -4,8 +4,20 @@ meta {
   seq: 2
 }
 
-get {
-  url: http://localhost:3025/ad/home
-  body: none
+put {
+  url: http://localhost:3025/ad/home/67ceff78a7eeaab5a944f7be
+  body: multipartForm
   auth: none
+}
+
+body:multipart-form {
+  titleFirst: Trusted Pet Care & Veterinary Center Point
+  homeRightImage: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\homeSectionOneRight.png)
+  descFirst: Template Kit uses demo images from Envato Elements Follower will need to license these images from Envato.
+  titleImgFirst: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\sectionOneTitle.png)
+  titleImgSecond: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\homeSectionTitleTwo.png)
+  imageSecond: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\aboutHelp.png)
+  imageThird: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\aboutHelpOne.png)
+  imageFourth: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\animals.png)
+  imageFifth: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\aboutImgOne.jpg)
 }

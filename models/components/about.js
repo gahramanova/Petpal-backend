@@ -20,4 +20,29 @@ const aboutValidate = (about) => {
 
 const About = mongoose.model("About", aboutSchema)
 
-module.exports= {About, aboutValidate}
+
+// ===============================================================================================
+
+const howWeCanHelpSchema = Schema({
+    images: String,
+    title: String,
+    desc: String,
+    buttonUrl: String
+}, {timestamps:true})
+
+const howWeCanHelpValidate = (help) => {
+    const schema = new Joi.object({
+        images: Joi.array().items(Joi.string()),
+        title: Joi.string(),
+        desc: Joi.string(),
+        buttonUrl: Joi.string()
+    })
+    return schema.validate(help)
+    
+}
+const HowWeCanHelp = mongoose.model("howWeCanHelp", howWeCanHelpSchema)
+
+module.exports = {
+    About, aboutValidate,
+    HowWeCanHelp, howWeCanHelpValidate
+}
