@@ -1,0 +1,20 @@
+meta {
+  name: teamAdd
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3025/ad/team
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  fullname: Daria Andaloro
+  jobposition: Veterinary Technician
+  coverImage: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\teamThree.jpg)
+  images: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\teamThree.jpg)
+  experience: 5 years
+  experienceDesc: when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries but also thep into electronic typesetting, remaining essentially.
+}

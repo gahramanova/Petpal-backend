@@ -1,0 +1,20 @@
+meta {
+  name: teamEdit
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:3025/ad/team/67dc684abb6af83d6b3c1f69
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  fullname: Michael Brian
+  jobposition: Medicine Specialist
+  experience: 6 years
+  experienceDesc: when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries but also thep into electronic typesetting, remaining essentially
+  coverImage: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\teamThree.jpg)
+  images: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\teamThree.jpg)
+}

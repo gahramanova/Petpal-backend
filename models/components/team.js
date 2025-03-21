@@ -4,11 +4,12 @@ const teamSchema = Schema({
     fullname: String,
     jobposition: String,
     coverImage: String,
+    images:[String],
     experience: String,
     experienceDesc: String,
-    instagramUrl: String,
-    facebookUrl: String,
-    whatsappUrl: String,
+    // instagramUrl: String,
+    // facebookUrl: String,
+    // whatsappUrl: String,
     
 
     
@@ -19,11 +20,12 @@ const teamValidate = (team) => {
         fullname: Joi.string(),
         jobposition: Joi.string(),
         coverImage: Joi.string(),
+        images: Joi.array().items(Joi.string()),
         experience: Joi.string(),
         experienceDesc: Joi.string(),
-        instagramUrl: Joi.string(),
-        facebookUrl: Joi.string(),
-        whatsappUrl: Joi.string(),
+        // instagramUrl: Joi.string(),
+        // facebookUrl: Joi.string(),
+        // whatsappUrl: Joi.string(),
     })
 
     return schema.validate(team)
