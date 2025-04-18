@@ -1,11 +1,15 @@
 const express = require("express")
 const app = express()
 const cors = require("cors")
+const path = require("path");
 const connectdb = require("./config/connectdb")
 require('dotenv').config();
 
 // start middleware
 app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173", // Frontend tətbiqinizin ünvanı
+  }));
 app.use(express.json())
 //start end
 
@@ -33,6 +37,8 @@ app.use("/ad/team", adTeamRoute)
 
 //admin router ends
 
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 connectdb()

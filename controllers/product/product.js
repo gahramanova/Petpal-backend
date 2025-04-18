@@ -28,31 +28,49 @@ exports.productByPaginationList = async (req, res) => {
 exports.productAdd = async (req, res) => {
     const { error } = productValidate(req.body);
     if (error) {
-        res.status(400).send(error.message);
-    } else {
+        return res.status(400).send(error.message);
+    }
+
+    try {
         let product;
         let result;
         let fileObj = req.files;
         let filesObjLength = Object.keys(fileObj).length;
-        if (filesObjLength === 0) {
 
+        // Fayl olmadan məhsul əlavə edilməsi
+        if (filesObjLength === 0) {
             product = new Product(req.body);
             result = await product.save();
-            res.status(201).json(result);
-
-        } else {
-            const product = new Product(req.body);
-            const uploadFiles = [];
-            req.files.images.map(async item => {
-                uploadFiles.push(item.path)
-            })
-            product.images = uploadFiles;
-            product.coverImg = req.files.coverImg[0].path;
-            const result = await product.save();
-            res.status(201).json(result);
+            return res.status(201).json(result);
         }
+
+        // Fayllarla məhsul əlavə edilməsi
+        product = new Product(req.body);
+        const uploadFiles = [];
+
+        // Asinxron fayl yükləmə əməliyyatı
+        if (req.files.images) {
+            const imagePaths = await Promise.all(
+                req.files.images.map(async item => item.path)
+            );
+            uploadFiles.push(...imagePaths);
+        }
+
+        // Yüklənmiş şəkil və örtük şəkilini əlavə edin
+        if (req.files.coverImg) {
+            product.coverImg = req.files.coverImg[0].path;
+        }
+        product.images = uploadFiles;
+
+        // Məhsulu verilənlər bazasına əlavə et
+        result = await product.save();
+        return res.status(201).json(result);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Error while adding product");
     }
-}
+};
+
 
 
 exports.productEdit = async (req, res) => {
