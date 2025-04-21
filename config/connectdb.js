@@ -6,7 +6,7 @@ const mongoose = require("mongoose")
 // }
  const conncectdb = async() => {
     try {
-        await mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSW}@${process.env.DB_CLUSTER}.l5902.mongodb.net/?retryWrites=true&w=majority&appName=petpal-cluster`)
+        await mongoose.connect(`mongodb+srv://nrmnqhrmn24:petpal@petpal-cluster.l5902.mongodb.net/?retryWrites=true&w=majority&appName=petpal-cluster`)
         console.log("Mongodb connection is successfully")
     } catch (error) {
         console.log(error)
