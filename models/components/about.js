@@ -3,7 +3,7 @@ const {default: mongoose, Schema} = require("mongoose")
 
 
 const aboutSchema =  Schema({
-    images: String, 
+    images: [String], 
     title: String,
     desc: String
     
@@ -11,7 +11,7 @@ const aboutSchema =  Schema({
 
 const aboutValidate = (about) => {
     const schema = new Joi.object({
-        images: Joi.array().items(Joi.string()),
+        images: Joi.string(),
         title: Joi.string(),
         desc: Joi.string()
     })
@@ -24,7 +24,7 @@ const About = mongoose.model("About", aboutSchema)
 // ===============================================================================================
 
 const howWeCanHelpSchema = Schema({
-    images: String,
+    images: [String],
     title: String,
     desc: String,
     buttonUrl: String

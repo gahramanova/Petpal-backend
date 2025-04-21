@@ -27,6 +27,8 @@ const adCategoryRoute = require('./routers/admin/category');
 const adhomeRoute = require("./routers/admin/home")
 const adaboutRoute = require("./routers/admin/about")
 const adTeamRoute = require("./routers/admin/team")
+const adGeneralInformation = require("./routers/admin/generalinformation");
+
 
 
 app.use("/ad/product", adProductRouter)
@@ -34,6 +36,9 @@ app.use('/ad/category',adCategoryRoute);
 app.use("/ad/home", adhomeRoute)
 app.use("/ad/about", adaboutRoute)
 app.use("/ad/team", adTeamRoute)
+app.use("/ad/generalinfo", adGeneralInformation);
+
+
 
 //admin router ends
 

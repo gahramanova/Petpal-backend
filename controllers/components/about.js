@@ -1,4 +1,4 @@
-const { About, HowWeCanHelp } = require("../../models/components/about")
+const { About, HowWeCanHelp, howWeCanHelpValidate } = require("../../models/components/about")
 const { deleteSingleOldImage } = require("../../utils/deleteOldImage")
 
 
@@ -9,37 +9,39 @@ exports.aboutAllList = async(req,res) => {
 }
 
 
-exports.aboutEdit = async (req,res) => {
-    const about = await About.findById("67ceff78a7eeaab5a944f7be")
+exports.aboutEdit = async (req, res) => {
+    const about = await About.findById(req.params.id);
 
     if (!about) {
-        return res.status(400).send("There is not such kind of data")
-    } else {
-
-        if (req.files) {
-            const about = await About.findByIdAndUpdate("67ceff78a7eeaab5a944f7be", 
-
-                {...req.body}, {new:true}
-            );
-
-            deleteSingleOldImage(about.images)
-
-            about.images = req.files.images[0].path
-
-
-            await about.save()
-            res.status(200).json(about)
-
-        }else {
-            const about = await About.findByIdAndUpdate("67ceff78a7eeaab5a944f7be", 
-                {...req.body}
-            )
-            await about.save()
-            res.status(200).json(about)
-        }
-        
+        return res.status(400).send("There is not such kind of data");
     }
-}
+
+    if (req.files && req.files.images && req.files.images.length > 0) {
+        // Köhnə şəkilləri sil
+        if (about.images && about.images.length > 0) {
+            about.images.forEach(image => deleteSingleOldImage(image));
+        }
+
+        const imagePaths = req.files.images.map(file => file.path);
+
+        const updated = await About.findByIdAndUpdate(
+            req.params.id,
+            { ...req.body, images: imagePaths },
+            { new: true }
+        );
+
+        return res.status(200).json(updated);
+    } else {
+        const updated = await About.findByIdAndUpdate(
+            req.params.id,
+            { ...req.body },
+            { new: true }
+        );
+
+        return res.status(200).json(updated);
+    }
+};
+
 
 exports.aboutDelete = async (req, res) => {
     const about = await About.findByIdAndDelete(req.params.id);
@@ -57,51 +59,52 @@ exports.howWeCanHelpAll = async(req,res) => {
 }
 
 exports.howWeCanHelpAdd = async (req, res) => {
+    const { error } = howWeCanHelpValidate(req.body);
+    if (error) {
+        return res.status(400).send(error.message);
+    }
+
     try {
-        const helpData = [
-            { title: "Test About 1", description: "This is a test description" },
-        ];
-        const createdData = await HowWeCanHelp.insertMany(helpData);
-        res.status(201).send({ message: "Test data added successfully", data: createdData });
-    } catch (error) {
-        res.status(500).send({ error: "Error adding test data", details: error.message });
+        let help;
+        let result;
+        let fileObj = req.files;
+        let filesObjLength = Object.keys(fileObj).length;
+
+        // Fayl olmadan məhsul əlavə edilməsi
+        if (filesObjLength === 0) {
+            help = new HowWeCanHelp(req.body);
+            result = await help.save();
+            return res.status(201).json(result);
+        }
+
+        // Fayllarla məhsul əlavə edilməsi
+        help = new HowWeCanHelp(req.body);
+        const uploadFiles = [];
+
+        // Asinxron fayl yükləmə əməliyyatı
+        if (req.files.images) {
+            const imagePaths = await Promise.all(
+                req.files.images.map(async item => item.path)
+            );
+            uploadFiles.push(...imagePaths);
+        }
+
+        // Yüklənmiş şəkil və örtük şəkilini əlavə edin
+        if (req.files.coverImg) {
+            help.coverImg = req.files.coverImg[0].path;
+        }
+        help.images = uploadFiles;
+
+        // Məhsulu verilənlər bazasına əlavə et
+        result = await help.save();
+        return res.status(201).json(result);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Error while adding product");
     }
 };
 
 
-
-
-exports.howWeCanHelpEdit = async(req,res) => {
-    const help = await HowWeCanHelp.findById("67d3223f8af4bf330f69874a")
-
-
-    if(!help) {
-        return res.status(400).send("There is not such kind of data")
-
-    } else {
-
-        if(req.files) {
-            const help = await HowWeCanHelp.findByIdAndUpdate("67d3223f8af4bf330f69874a",
-            {...req.body}, {new:true}
-            )
-
-            deleteSingleOldImage(help.images)
-            help.images = req.files.images[0].path
-
-            await help.save()
-            res.status(200).json(help)
-
-
-        }else {
-            const help = await HowWeCanHelp.findByIdAndUpdate("67d3223f8af4bf330f69874a", 
-                {...req.body}
-            )
-            await help.save()
-            res.status(200).json(help)
-        }
-
-    }
-}
 
 
 exports.howWeCanHelpDelete = async (req, res) => {
