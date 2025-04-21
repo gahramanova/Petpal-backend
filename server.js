@@ -40,6 +40,7 @@ app.use("/ad/team", adTeamRoute)
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+console.log("api is working")
 
 connectdb()
 app.listen(process.env.PORT, ()=> {
