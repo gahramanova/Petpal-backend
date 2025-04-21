@@ -39,6 +39,6 @@ app.use("/ad/team", adTeamRoute)
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
-
+console.log("API is working")
 
 module.exports = app;
