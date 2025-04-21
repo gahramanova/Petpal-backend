@@ -1,14 +1,13 @@
-require("dotenv").config(); // Əlavə et əgər yoxdursa
-
+require('dotenv').config();
 const mongoose = require("mongoose");
 
-const conncectdb = async () => {
+const connectdb = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI); // Environment-dən oxuyur
-    console.log("Mongodb connection is successfully");
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB connection successful ✅");
   } catch (error) {
-    console.log(error);
+    console.log("MongoDB connection error ❌", error);
   }
 };
 
-module.exports = conncectdb;
+module.exports = connectdb;
