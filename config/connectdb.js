@@ -1,15 +1,14 @@
-const mongoose = require("mongoose")
+require("dotenv").config(); // Əlavə et əgər yoxdursa
 
-// const authdb = {
-//     username: "nrmnqhrmn24",
-//     password: "petpal",
-// }
- const conncectdb = async() => {
-    try {
-        await mongoose.connect(`mongodb+srv://nrmnqhrmn24:petpal@petpal-cluster.l5902.mongodb.net/?retryWrites=true&w=majority&appName=petpal-cluster`)
-        console.log("Mongodb connection is successfully")
-    } catch (error) {
-        console.log(error)
-    }
-}
-module.exports = conncectdb
+const mongoose = require("mongoose");
+
+const conncectdb = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI); // Environment-dən oxuyur
+    console.log("Mongodb connection is successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = conncectdb;
