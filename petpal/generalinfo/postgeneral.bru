@@ -1,0 +1,27 @@
+meta {
+  name: postgeneral
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3025/ad/generalinfo
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  title: Narmin
+  logo: @file(C:\Users\Elman\Pictures\Screenshots\Screenshot 2024-12-16 013416.png)
+  favicon: @file(C:\Users\Elman\Pictures\Screenshots\Screenshot 2024-12-11 141147.png)
+  desc: 2
+  keyword: 3
+  phone: 4
+  email: 5
+  address: 6
+  openingHours: 7
+  mapUrl: 8
+  instagramUrl: 9
+  facebookUrl: 10
+  linkedinUrl: 11
+}
