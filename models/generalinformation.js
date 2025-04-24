@@ -2,35 +2,31 @@ const Joi = require("joi")
 const {default: mongoose, Schema} = require("mongoose")
 const generalInformationSchema = Schema({
     title: String,
-    logo: String,
-    favicon: String,
+    logoLight: String,
+    logoDark: String,
     desc: String,
     keyword: [String],
     phone: [Number],
     email: [String],
     address: String,
-    openingHours: String,
-    mapUrl: String,
     instagramUrl: String,
     facebookUrl: String,
-    linkedinUrl: String,
+    twitterUrl: String,
 })
 
 const generalInformationValidate = (generalInformation) => {
     const schema = new Joi.object({
         title: new Joi.string(),
-        logo: new Joi.string(),
-        favicon: new Joi.string(),
+        logoLight: new Joi.string(),
+        logoDark: new Joi.string(),
         desc: new Joi.string(),
         keyword: new Joi.string(),
         phone: new Joi.string(),
         email: new Joi.string(),
         address: new Joi.string(),
-        openingHours: new Joi.string(),
-        mapUrl: new Joi.string(),
         instagramUrl: new Joi.string(),
         facebookUrl: new Joi.string(),
-        linkedinUrl: new Joi.string(),
+        twitterUrl: new Joi.string(),
     })
 
     return schema.validate(generalInformation)

@@ -1,0 +1,25 @@
+meta {
+  name: generalinfoEdit
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:3025/ad/generalinfo/6807dff749a153ab4b0a3766
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  title: Petpal
+  logoLight: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\petpalLogo-footer.png)
+  logoDark: @file(C:\Users\Narmin\Desktop\Petpal\src\assets\img\petpalLogo.png)
+  desc: Welcome to PetPal, your one-stop destination for expert advice, tips, and resources on animal care. Whether you're a first-time pet owner or a seasoned animal lover, we provide comprehensive guides on feeding, grooming, training, and health care for your furry, feathered, or scaly companions. Join our community to ensure your pets live happy, healthy, and fulfilling lives!
+  keyword: Petpal
+  phone: +48455324789
+  email: petpal@gmail.com
+  address: 54A/ New York City, USA
+  instagramUrl: https://www.instagram.com/
+  facebookUrl: https://www.facebook.com/
+  twitterUrl: https://x.com/
+}

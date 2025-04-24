@@ -7,8 +7,8 @@ const { generalInformationList, generalInformationEdit, generalInformationAdd, g
 
 router.get('/', generalInformationList);
 router.get("/:id", generalInformationSingleList);
-router.post('/', upload.fields([{ name: "logo", maxCount: 1 }, { name: "favicon", maxCount: 1 }]), generalInformationAdd);
-router.put("/:id", upload.fields([{ name: "logo", maxCount: 1 }, { name: "favicon", maxCount: 1 }]), generalInformationEdit);
+router.post('/', upload.fields([{ name: "logoLight", maxCount: 1 }, { name: "logoDark", maxCount: 1 }]), generalInformationAdd);
+router.put("/:id", upload.fields([{ name: "logoLight", maxCount: 1 }, { name: "logoDark", maxCount: 1 }]), generalInformationEdit);
 router.delete("/:id", generalInformationDelete);
 
 

@@ -28,8 +28,8 @@ exports.generalInformationAdd = async (req, res) => {
 
         } else {
             const generalInformation = new GeneralInformation(req.body);
-            generalInformation.favicon = req.files.favicon[0].path;
-            generalInformation.logo = req.files.logo[0].path;
+            generalInformation.logoLight = req.files.logoLight[0].path;
+            generalInformation.logoDark = req.files.logoDark[0].path;
             const result = await generalInformation.save();
             res.status(201).send(result);
         }
@@ -61,10 +61,10 @@ exports.generalInformationEdit = async (req, res) => {
                 generalInformation = await GeneralInformation.findByIdAndUpdate(paramsId, {
                     ...req.body
                 });
-                deleteSingleOldImage(generalInformation.favicon);
-                deleteSingleOldImage(generalInformation.logo);
-                generalInformation.favicon = req.files.favicon[0].path;
-                generalInformation.logo = req.files.logo[0].path;
+                deleteSingleOldImage(generalInformation.logoLight);
+                deleteSingleOldImage(generalInformation.logoDark);
+                generalInformation.logoLight = req.files.logoLight[0].path;
+                generalInformation.logoDark = req.files.logoDark[0].path;
                 const result = await generalInformation.save();
                 res.status(201).send(result);
             }
@@ -74,7 +74,12 @@ exports.generalInformationEdit = async (req, res) => {
 
 exports.generalInformationDelete = async (req, res) => {
     const generalInformation = await GeneralInformation.findByIdAndDelete(req.params.id);
-    deleteSingleOldImage(generalInformation.favicon);
-    deleteSingleOldImage(generalInformation.logo);
+
+    if(!generalInformation) {
+        return res.status(404).json({ message: "Product not found" });
+    }
+
+    deleteSingleOldImage(generalInformation.logoLight);
+    deleteSingleOldImage(generalInformation.logoDark);
     res.status(200).send(generalInformation);
 }
