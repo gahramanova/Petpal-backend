@@ -1,4 +1,4 @@
-const staticToken = async (req, res, next) => {
+const accesstoken = async (req, res, next) => {
     try {
         const token = "f20e26bb783ea89ef58823b877337a2e"
         const incomingToken = req.headers["petpal-token"]
