@@ -71,6 +71,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 console.log("api is working")
 
 connectdb()
-app.listen(process.env.PORT, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT,  () => {
   console.log(`${process.env.PORT} port is running`);
 })
