@@ -1,4 +1,4 @@
-const { User, userValidate, loginValidate } = require("../../models/ubwo/user");
+const { User, registerValidate, loginValidate } = require("../../models/ubwo/user");
 const bcrypt = require("bcrypt");
 
 exports.userAuth = async (req, res) => {
@@ -35,7 +35,7 @@ exports.userList = async (req, res) => {
 }
 
 exports.userAdd = async (req, res) => {
-    const { error } = userValidate(req.body);
+    const { error } = registerValidate(req.body);
     if (error) {
         res.status(400).send(error.message);
     } else {

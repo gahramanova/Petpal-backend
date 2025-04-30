@@ -1,0 +1,28 @@
+meta {
+  name: userEdit
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:3025/ad/user/680e030e3e338d9fe8f447b3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Elman",
+    "surname": "Alakbarzade",
+    "email": "elman@alakbarzade",
+    "phone": "05555567787",
+    "password": "elman1234",
+    "role": "user",
+    "active": true
+    
+  }
+}
+
+body:multipart-form {
+  : 
+}

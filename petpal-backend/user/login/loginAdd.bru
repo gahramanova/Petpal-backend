@@ -1,0 +1,18 @@
+meta {
+  name: loginAdd
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3025/ad/login/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email":"narmin@a.com",
+    "password": "narmin123"
+  }
+}

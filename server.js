@@ -17,7 +17,7 @@ app.use(express.json())
 //client router start
 const accesstoken = require("./middlewares/accesstoken");
 const surfaceRouter = require("./routers/client/surface");
-//app.use(accesstoken);
+// app.use(accesstoken);
 app.use("/", surfaceRouter)
 
 
@@ -27,9 +27,9 @@ app.use("/", surfaceRouter)
 
 //auth router start
 const auth = require("./middlewares/auth");
-const { singleUser } = require("./controllers/ubwo/user");
+const { singleUser, userAuth } = require("./controllers/ubwo/user");
 
-//app.use(auth);
+// app.use(auth);
 app.use("/user/:id", singleUser);
 
 //order start
@@ -48,6 +48,8 @@ const adaboutRoute = require("./routers/admin/about")
 const adTeamRoute = require("./routers/admin/team")
 const adGeneralInformationRoute = require("./routers/admin/generalinformation");
 const adUserRoute = require("./routers/admin/user")
+const adLoginRoute = require("./routers/admin/auth")
+
 
 //app.use(isadmin);
 app.use("/ad/product", adProductRouter)
@@ -57,6 +59,8 @@ app.use("/ad/about", adaboutRoute)
 app.use("/ad/team", adTeamRoute)
 app.use("/ad/generalinfo", adGeneralInformationRoute);
 app.use("/ad/user", adUserRoute)
+app.use("/ad/login", adLoginRoute)
+
 
 
 //admin router ends

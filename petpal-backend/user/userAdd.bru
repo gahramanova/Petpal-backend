@@ -1,0 +1,23 @@
+meta {
+  name: userAdd
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3025/ad/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Elman",
+    "surname": "Alakbarzade",
+    "phone": "904508674534",
+    "email": "elman@alakbarzade",
+    "password": "elman1245", 
+    "role": "user",
+    "active": "true"
+  }
+}

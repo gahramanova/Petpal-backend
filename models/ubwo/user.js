@@ -29,7 +29,7 @@ const userSchema = new Schema({
         default: true
     }
 }, { timestamps: true });
-const userValidate = (user) => {
+const registerValidate = (user) => {
     const schema = new Joi.object({
         name: Joi.string().label("Name").required(),
         surname: Joi.string().label("Surname").required(),
@@ -62,4 +62,4 @@ userSchema.methods.createAuthToken = function () {
 
 const User = mongoose.model("User", userSchema)
 
-module.exports = { User, userValidate, loginValidate }
+module.exports = { User, registerValidate, loginValidate }
