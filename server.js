@@ -7,9 +7,9 @@ require('dotenv').config();
 
 // start middleware
 app.use(cors())
-app.use(cors({
-  origin: "http://localhost:5173", // Frontend tətbiqinizin ünvanı
-}));
+// app.use(cors({
+//   origin: "http://localhost:5173", // Frontend tətbiqinizin ünvanı
+// }));
 app.use(express.json())
 //start end
 
