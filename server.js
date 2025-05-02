@@ -29,7 +29,7 @@ app.use("/", surfaceRouter)
 const auth = require("./middlewares/auth");
 const { singleUser, userAuth } = require("./controllers/ubwo/user");
 
-// app.use(auth);
+app.use(auth);
 app.use("/user/:id", singleUser);
 
 //order start
