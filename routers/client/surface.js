@@ -17,12 +17,9 @@ router.get('/category/:id',categoryListById);
 router.get("/", aboutAllList)
 router.get("/howWeCanHelp", howWeCanHelpAll)
 
-
 router.get("/", homeAllList)
 
 router.get("/", teamAllList)
-
-
 
 
 
