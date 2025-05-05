@@ -6,10 +6,10 @@ const connectdb = require("./config/connectdb")
 require('dotenv').config();
 
 // start middleware
-app.use(cors())
-// app.use(cors({
-//   origin: "http://localhost:5173", // Frontend tətbiqinizin ünvanı
-// }));
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true // Frontend tətbiqinizin ünvanı
+}));
 app.use(express.json())
 //start end
 
@@ -29,7 +29,7 @@ app.use("/", surfaceRouter)
 const auth = require("./middlewares/auth");
 const { singleUser, userAuth } = require("./controllers/ubwo/user");
 
-app.use(auth);
+// app.use(auth);
 app.use("/user/:id", singleUser);
 
 //order start

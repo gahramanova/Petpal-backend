@@ -25,7 +25,7 @@ exports.userAuth = async (req, res) => {
 exports.singleUser = async (req, res) => {
     const user = await User.findById(req.params.id);
     res.status(200).send(user);
-  };
+};
 
 
 
@@ -52,6 +52,13 @@ exports.userAdd = async (req, res) => {
 
                 const token = user.createAuthToken();
                 const result = user.save();
+                res
+                    .cookie("petpal", token, {
+                        httpOnly: true,
+                        secure: true, // HTTPS istifadə edirsinizsə
+                        sameSite: "None", // frontend ayrı domain-dəsə
+                        maxAge: 24 * 60 * 60 * 1000 // 1 gün
+                    })
                 res.status(201).header("x-auth-token", token).send(result);
             }
         }
@@ -59,15 +66,15 @@ exports.userAdd = async (req, res) => {
 }
 exports.userEdit = async (req, res) => {
     const user = await User.findById(req.params.id);
-  
+
     if (!user) {
-      return res.status(404).send("There is no such data.");
+        return res.status(404).send("There is no such data.");
     } else {
-      const user = await User.findByIdAndUpdate(req.params.id, { ...req.body });
-      await user.save();
-      res.status(200).json(user);
+        const user = await User.findByIdAndUpdate(req.params.id, { ...req.body });
+        await user.save();
+        res.status(200).json(user);
     }
-  };
+};
 
 exports.userDelete = async (req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
