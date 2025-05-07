@@ -4,6 +4,7 @@ const { categoryList, categoryListById } = require("../../controllers/product/ca
 const { aboutAllList, howWeCanHelpAll } = require("../../controllers/components/about")
 const { homeAllList } = require("../../controllers/components/home")
 const { teamAllList } = require("../../controllers/components/team")
+const { generalInformationList } = require("../../controllers/generalInfo")
 const router = express.Router()
 
 
@@ -20,6 +21,8 @@ router.get("/howWeCanHelp", howWeCanHelpAll)
 router.get("/", homeAllList)
 
 router.get("/", teamAllList)
+
+router.get("/", generalInformationList)
 
 
 

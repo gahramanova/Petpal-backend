@@ -48,6 +48,7 @@ const adaboutRoute = require("./routers/admin/about")
 const adTeamRoute = require("./routers/admin/team")
 const adUserRoute = require("./routers/admin/user")
 const adLoginRoute = require("./routers/admin/auth")
+const adGeneralInfo = require("./routers/admin/generalInfo")
 
 
 //app.use(isadmin);
@@ -58,6 +59,7 @@ app.use("/ad/about", adaboutRoute)
 app.use("/ad/team", adTeamRoute)
 app.use("/ad/user", adUserRoute)
 app.use("/ad/login", adLoginRoute)
+app.use("/ad/generalInfo", adGeneralInfo)
 
 
 
