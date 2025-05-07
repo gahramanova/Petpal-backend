@@ -49,7 +49,7 @@ exports.generalInformationEdit = async (req, res) => {
         if (!generalInformation) {
             return res.status(404).send("No GeneralInformation");
         } else {
-            let fileObj = req.files;
+            let fileObj = req.files || {};
             let filesObjLength = Object.keys(fileObj).length;
             if (filesObjLength === 0) {
                 generalInformation = await GeneralInformation.findByIdAndUpdate(paramsId, {
@@ -75,7 +75,7 @@ exports.generalInformationEdit = async (req, res) => {
 exports.generalInformationDelete = async (req, res) => {
     const generalInformation = await GeneralInformation.findByIdAndDelete(req.params.id);
 
-    if(!generalInformation) {
+    if (!generalInformation) {
         return res.status(404).json({ message: "Product not found" });
     }
 
