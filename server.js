@@ -20,6 +20,23 @@ const surfaceRouter = require("./routers/client/surface");
 // app.use(accesstoken);
 app.use("/", surfaceRouter)
 
+const auth = require("./middlewares/auth");
+
+// app.use(auth);
+
+
+//client router end 
+
+
+//auth router start
+
+const adUserRoute = require("./routers/admin/user")
+const adLoginRoute = require("./routers/admin/auth")
+
+
+app.use("/ad/user", adUserRoute)
+app.use("/ad/login", adLoginRoute)
+
 
 const { singleUser, userAuth } = require("./controllers/ubwo/user");
 
@@ -52,21 +69,8 @@ app.use("/ad/generalInfo", adGeneralInfo)
 
 
 
-//client router end 
 
 
-//auth router start
-
-const adUserRoute = require("./routers/admin/user")
-const adLoginRoute = require("./routers/admin/auth")
-
-
-app.use("/ad/user", adUserRoute)
-app.use("/ad/login", adLoginRoute)
-
-const auth = require("./middlewares/auth");
-
-app.use(auth);
 
 
 
