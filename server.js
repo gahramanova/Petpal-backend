@@ -22,7 +22,12 @@ app.use("/", surfaceRouter)
 
 
 //client router end 
+const adUserRoute = require("./routers/admin/user")
+const adLoginRoute = require("./routers/admin/auth")
 
+
+app.use("/ad/user", adUserRoute)
+app.use("/ad/login", adLoginRoute)
 
 
 //auth router start
@@ -46,8 +51,6 @@ const adCategoryRoute = require('./routers/admin/category');
 const adhomeRoute = require("./routers/admin/home")
 const adaboutRoute = require("./routers/admin/about")
 const adTeamRoute = require("./routers/admin/team")
-const adUserRoute = require("./routers/admin/user")
-const adLoginRoute = require("./routers/admin/auth")
 const adGeneralInfo = require("./routers/admin/generalInfo")
 
 
@@ -57,8 +60,6 @@ app.use('/ad/category', adCategoryRoute);
 app.use("/ad/home", adhomeRoute)
 app.use("/ad/about", adaboutRoute)
 app.use("/ad/team", adTeamRoute)
-app.use("/ad/user", adUserRoute)
-app.use("/ad/login", adLoginRoute)
 app.use("/ad/generalInfo", adGeneralInfo)
 
 
