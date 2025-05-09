@@ -54,7 +54,7 @@ const adTeamRoute = require("./routers/admin/team")
 const adGeneralInfo = require("./routers/admin/generalInfo")
 
 
-app.use(isadmin);
+// app.use(isadmin);
 app.use("/ad/product", adProductRouter)
 app.use('/ad/category', adCategoryRoute);
 app.use("/ad/home", adhomeRoute)
