@@ -4,7 +4,6 @@ const upload = require("../../middlewares/uploadsFile");
 const { aboutAllList, aboutEdit, howWeCanHelpAll, aboutDelete, howWeCanHelpDelete, howWeCanHelpEdit, howWeCanHelpAdd } = require("../../controllers/components/about");
 
 
-router.get("/", aboutAllList)
 router.put("/:id", upload.fields([{name:"images", maxCount:2}]), aboutEdit)
 router.delete("/:id", aboutDelete)
 

@@ -4,7 +4,6 @@ const upload = require("../../middlewares/uploadsFile");
 const { homeAllList,  homeEdit } = require("../../controllers/components/home");
 
 
-router.get("/", homeAllList)
 router.put("/:id", upload.fields([
     {name:"homeRightImage", maxCount:1},
     {name:"titleImgFirst", maxCount:1},

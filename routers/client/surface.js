@@ -15,14 +15,14 @@ router.get("/productpag", productByPaginationList)
 router.get('/category',categoryList);
 router.get('/category/:id',categoryListById);
 
-router.get("/", aboutAllList)
+router.get("/about", aboutAllList)
 router.get("/howWeCanHelp", howWeCanHelpAll)
 
-router.get("/", homeAllList)
+router.get("/home", homeAllList)
 
-router.get("/", teamAllList)
+router.get("/team", teamAllList)
 
-router.get("/", generalInformationList)
+router.get("/generalInfo", generalInformationList)
 
 
 
