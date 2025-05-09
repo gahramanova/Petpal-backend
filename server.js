@@ -21,20 +21,8 @@ const surfaceRouter = require("./routers/client/surface");
 app.use("/", surfaceRouter)
 
 
-//client router end 
-const adUserRoute = require("./routers/admin/user")
-const adLoginRoute = require("./routers/admin/auth")
-
-
-app.use("/ad/user", adUserRoute)
-app.use("/ad/login", adLoginRoute)
-
-
-//auth router start
-const auth = require("./middlewares/auth");
 const { singleUser, userAuth } = require("./controllers/ubwo/user");
 
-app.use(auth);
 app.use("/user/:id", singleUser);
 
 //order start
@@ -61,6 +49,24 @@ app.use("/ad/home", adhomeRoute)
 app.use("/ad/about", adaboutRoute)
 app.use("/ad/team", adTeamRoute)
 app.use("/ad/generalInfo", adGeneralInfo)
+
+
+
+//client router end 
+
+
+//auth router start
+
+const adUserRoute = require("./routers/admin/user")
+const adLoginRoute = require("./routers/admin/auth")
+
+
+app.use("/ad/user", adUserRoute)
+app.use("/ad/login", adLoginRoute)
+
+const auth = require("./middlewares/auth");
+
+app.use(auth);
 
 
 
