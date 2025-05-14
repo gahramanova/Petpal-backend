@@ -6,9 +6,21 @@ const connectdb = require("./config/connectdb")
 require('dotenv').config();
 
 // start middleware
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://your-deployed-frontend.com"
+];
+
 app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true // Frontend tətbiqinizin ünvanı
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true
 }));
 app.use(express.json())
 //start end
