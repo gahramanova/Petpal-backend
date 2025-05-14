@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-deployed-frontend.com"
+  "https://petpal-kappa.vercel.app"
 ];
 
 app.use(cors({
