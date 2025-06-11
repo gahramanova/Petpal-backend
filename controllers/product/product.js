@@ -2,6 +2,7 @@ const { Product, productValidate } = require("../../models/product/product")
 const { deleteSingleOldImage, deleteManyOldImage } = require("../../utils/deleteOldImage")
 
 
+
 exports.productListAll = async (req, res) => {
     const product = await Product.find().populate("category")
     res.status(200).send(product)
@@ -41,6 +42,10 @@ exports.productAdd = async (req, res) => {
         if (filesObjLength === 0) {
             product = new Product(req.body);
             result = await product.save();
+
+            // Log yaz
+            productLogger.info(`Product added without files. Title: ${product.title}, ID: ${product._id}`);
+
             return res.status(201).json(result);
         }
 
@@ -64,6 +69,10 @@ exports.productAdd = async (req, res) => {
 
         // Məhsulu verilənlər bazasına əlavə et
         result = await product.save();
+
+        // Log yaz
+        productLogger.info(`Product added with files. Title: ${product.title}, ID: ${product._id}`);
+
         return res.status(201).json(result);
     } catch (err) {
         console.log(err);
@@ -87,37 +96,56 @@ exports.productEdit = async (req, res) => {
         return res.status(404).send("No Product");
     }
 
-    // control this line, if req.files undefined
-    let fileObj = req.files || {}; 
+    let fileObj = req.files || {};
     let filesObjLength = Object.keys(fileObj).length;
 
-    if (filesObjLength === 0) {
+    try {
+        if (filesObjLength === 0) {
+            product = await Product.findByIdAndUpdate(paramsId, { ...req.body }, { new: true });
+            await product.save();
+
+            // ✅ Log faylına qeyd et (fayl yükləməsi olmadan)
+            productLogger.info(`Product edited without files. Title: ${product.title}, ID: ${product._id}`);
+
+            return res.status(200).json(product);
+        }
+
+        // Fayllar ilə update
         product = await Product.findByIdAndUpdate(paramsId, { ...req.body }, { new: true });
-        await product.save();
-        return res.status(200).json(product);
-    }
-    product = await Product.findByIdAndUpdate(paramsId, { ...req.body }, { new: true });
 
-    if (product.coverImg) {
-        deleteSingleOldImage(product.coverImg);
-    }
-    if (product.images) {
-        deleteManyOldImage(product.images);
-    }
+        if (product.coverImg) {
+            deleteSingleOldImage(product.coverImg);
+        }
 
-    const uploadFiles = [];
-    if (req.files.images) {
-        req.files.images.forEach(item => {
-            uploadFiles.push(item.path);
-        });
+        if (product.images) {
+            deleteManyOldImage(product.images);
+        }
+
+        const uploadFiles = [];
+        if (req.files.images) {
+            req.files.images.forEach(item => {
+                uploadFiles.push(item.path);
+            });
+        }
+
+        product.images = uploadFiles;
+        product.coverImg = req.files.coverImg?.[0]?.path || product.coverImg;
+
+        const result = await product.save();
+
+        // ✅ Log faylına qeyd et (fayllar ilə)
+        productLogger.info(`Product edited with files. Title: ${product.title}, ID: ${product._id}`);
+
+        res.status(201).send(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Product update failed");
+
+        // ❌ Uğursuzluq da loglana bilər (əgər istəsən):
+        productLogger.error(`Product edit failed. ID: ${paramsId}, Error: ${err.message}`);
     }
-
-    product.images = uploadFiles;
-    product.coverImg = req.files.coverImg?.[0]?.path || product.coverImg;
-
-    const result = await product.save();
-    res.status(201).send(result);
 };
+
 
 exports.productDelete = async (req, res) => {
     const product = await Product.findByIdAndDelete(req.params.id);

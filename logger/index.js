@@ -1,4 +1,6 @@
+
 module.exports = {
   serverLogger: require('./serverLogger'),
-  auditLogger: require('./auditLogger'),
+  userLogger: require('./userLogger'),
+  productLogger: require('./productLogger')
 };
