@@ -1,11 +1,11 @@
-const express = require("express")
-const app = express()
-const cors = require("cors")
+const express = require("express");
+const app = express();
+const cors = require("cors");
 const path = require("path");
-const connectdb = require("./config/connectdb")
-require('dotenv').config();
-
-// start middleware
+const connectdb = require("./config/connectdb");
+require("dotenv").config();
+const { serverLogger, auditLogger } = require("./logger"); 
+const xss = require("xss-clean");
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -22,81 +22,39 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use(express.json())
-//start end
+app.use(express.json());     // 1. JSON parse
+app.use(xss());              // 2. XSS Protection (Clean all inputs)
 
 
-//client router start
-const accesstoken = require("./middlewares/accesstoken");
+// Request log middleware
+app.use((req, res, next) => {
+  serverLogger.info(`${req.method} ${req.originalUrl} - IP: ${req.ip}`);
+  next();
+});
+
+// Routers
 const surfaceRouter = require("./routers/client/surface");
-// app.use(accesstoken);
-app.use("/", surfaceRouter)
+app.use("/", surfaceRouter);
 
-const auth = require("./middlewares/auth");
+// Admin routers
+const adUserRoute = require("./routers/admin/user");
+const adLoginRoute = require("./routers/admin/auth");
+app.use("/ad/user", adUserRoute);
+app.use("/ad/login", adLoginRoute);
 
-// app.use(auth);
-
-
-//client router end 
-
-
-//auth router start
-
-const adUserRoute = require("./routers/admin/user")
-const adLoginRoute = require("./routers/admin/auth")
-
-
-app.use("/ad/user", adUserRoute)
-app.use("/ad/login", adLoginRoute)
-
-
-const { singleUser, userAuth } = require("./controllers/ubwo/user");
-
-app.use("/user/:id", singleUser);
-
-//order start
-
-
-//order end
-
-//auth router end
-
-//admin routes start
-const isadmin = require("./middlewares/isadmin");
-const adProductRouter = require("./routers/admin/product")
-const adCategoryRoute = require('./routers/admin/category');
-const adhomeRoute = require("./routers/admin/home")
-const adaboutRoute = require("./routers/admin/about")
-const adTeamRoute = require("./routers/admin/team")
-const adGeneralInfo = require("./routers/admin/generalInfo")
-
-
-// app.use(isadmin);
-app.use("/ad/product", adProductRouter)
-app.use('/ad/category', adCategoryRoute);
-app.use("/ad/home", adhomeRoute)
-app.use("/ad/about", adaboutRoute)
-app.use("/ad/team", adTeamRoute)
-app.use("/ad/generalInfo", adGeneralInfo)
-
-
-
-
-
-
-
-
-//admin router ends
-
+// ... digər routerlər ...
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-console.log("api is working")
+// Error handler
+app.use((err, req, res, next) => {
+  serverLogger.error(`Xəta: ${err.message} - ${req.method} ${req.url}`);
+  res.status(500).send("Serverdə xəta baş verdi");
+});
 
-connectdb()
-
-
+// DB və server start
+connectdb();
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  serverLogger.info(`Server is running on port ${PORT}`);
 });
