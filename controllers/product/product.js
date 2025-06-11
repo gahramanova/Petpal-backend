@@ -1,5 +1,6 @@
 const { Product, productValidate } = require("../../models/product/product")
 const { deleteSingleOldImage, deleteManyOldImage } = require("../../utils/deleteOldImage")
+const productLogger = require("../../logger/productLogger");
 
 
 
@@ -104,7 +105,6 @@ exports.productEdit = async (req, res) => {
             product = await Product.findByIdAndUpdate(paramsId, { ...req.body }, { new: true });
             await product.save();
 
-            // ✅ Log faylına qeyd et (fayl yükləməsi olmadan)
             productLogger.info(`Product edited without files. Title: ${product.title}, ID: ${product._id}`);
 
             return res.status(200).json(product);
@@ -133,7 +133,6 @@ exports.productEdit = async (req, res) => {
 
         const result = await product.save();
 
-        // ✅ Log faylına qeyd et (fayllar ilə)
         productLogger.info(`Product edited with files. Title: ${product.title}, ID: ${product._id}`);
 
         res.status(201).send(result);
@@ -141,18 +140,29 @@ exports.productEdit = async (req, res) => {
         console.error(err);
         res.status(500).send("Product update failed");
 
-        // ❌ Uğursuzluq da loglana bilər (əgər istəsən):
         productLogger.error(`Product edit failed. ID: ${paramsId}, Error: ${err.message}`);
     }
 };
 
 
 exports.productDelete = async (req, res) => {
-    const product = await Product.findByIdAndDelete(req.params.id);
-    if (!product) {
-        return res.status(404).json({ message: "Product not found" });
+    try {
+        const product = await Product.findByIdAndDelete(req.params.id);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        deleteSingleOldImage(product.coverImg);
+        deleteManyOldImage(product.images);
+
+        // Audit log
+        productLogger.info(`Product deleted. Title: ${product.title}, ID: ${product._id}`);
+
+        res.status(200).send(product);
+    } catch (err) {
+        console.error(err);
+        productLogger.error(`Product delete failed. ID: ${req.params.id}, Error: ${err.message}`);
+        res.status(500).send("Error deleting product");
     }
-    deleteSingleOldImage(product.coverImg);
-    deleteManyOldImage(product.images);
-    res.status(200).send(product);
-}
+};
